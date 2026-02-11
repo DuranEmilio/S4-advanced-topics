@@ -36,10 +36,10 @@ public class Window extends JFrame implements ActionListener {
     cleanBtn = new JButton("Limpiar");
     cleanBtn.addActionListener(this);
 
-    this.add(lbF);
-    this.add(txtF);
     this.add(lbC);
     this.add(txtC);
+    this.add(lbF);
+    this.add(txtF);
     this.add(convertBtn);
     this.add(cleanBtn);
   }
@@ -50,14 +50,16 @@ public class Window extends JFrame implements ActionListener {
       double f = 0, c = 0;
       try {
         if (!txtC.getText().isEmpty()) {
-          f = Double.parseDouble(txtC.getText());
-          c = (f - 32) * 5/9;
-          txtF.setText(String.format("%.1f", c));
+          c = Double.parseDouble(txtC.getText());
+          f = (c - 32) * 5/9;
+          txtF.setText(String.format("%.1f", f));
         } else if (!txtF.getText().isEmpty()) {
-          c = Double.parseDouble(txtF.getText());
+          f = Double.parseDouble(txtF.getText());
+          c = (f * 9/5) + 32;
+          txtC.setText(String.format("%.1f", c));
         }
       } catch (NumberFormatException ex) {
-
+        JOptionPane.showMessageDialog(this, "Debe ingesar un numero valido", "Algo anda mal", JOptionPane.ERROR_MESSAGE);
       }
     } else if (e.getSource() == cleanBtn) {
       txtC.setText("");
